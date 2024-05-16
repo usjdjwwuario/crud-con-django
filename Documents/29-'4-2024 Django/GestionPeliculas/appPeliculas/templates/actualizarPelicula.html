@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+
+
+{% block actualizarPelicula %}
+
+    <div class="container">
+       
+        <h1>{{ mensaje }}</h1>
+        <form enctype="multipart/form-data" method="post" action="/actualizarPelicula/">
+            {% csrf_token %}
+            <h3 class=" text-center text-lg">Actualizar Pelicula</h3>
+            <div class="mb-4">
+                <label class="block  text-gray-700 text-sm font-bold mb-2" for="txtCodigo">
+                Codigo
+                </label>
+                <input name="txtCodigo" value="{{pelicula.codigo}}" readonly  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="codigo" type="number" placeholder="Agrega el codigo "> 
+                <small class="text-red-500">Este campo no puede ser modificado</small>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 text-sm font-bold mb-2" for="txtTitulo">
+                    Titulo
+                </label>
+                <input name="txtTitulo" value="{{pelicula.titulo}}"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="titulo" type="text" placeholder="Agrega el Titulo">
+            </div>
+            <div class="mb-4">
+                <label class="block  text-gray-700 text-sm font-bold mb-2" for="txtProtagonista">
+                    Protagonista
+                </label>
+                <input name="txtProtagonista" value="{{pelicula.protagonista}}"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="protagonista" type="text" placeholder="Nombre del  Protagonista">
+            </div>
+            <div class="mb-4">
+                <label class="block l text-gray-700 text-sm font-bold mb-2" for="txtDuracion">
+                    Duracion
+                </label>
+                <input name="txtDuracion" value="{{pelicula.duracion}}"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="duracion" type="number" placeholder="Duracion de la Pelicula">
+            </div>
+            <div class="mb-4">
+                <label class="block  text-gray-700 text-sm font-bold mb-2" for="txtResumen">
+                    Resumen
+                </label>
+                <textarea name="txtResumen"  class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="resumen" type="text" placeholder="Resumen de la Pelicula">{{pelicula.resumen}}</textarea>
+            </div>
+            <div class="mb-4">
+                <label class="block  text-gray-700 text-sm font-bold mb-2" for="idGenero">
+                    Genero
+                </label>
+                <select name="idGenero" id="idGenero">
+                    <option value="">Seleccione</option>
+
+                    {% for g in generos %}
+                    {% if g.id == pelicula.genero.id %}
+                    <option value="{{g.id}}" selected>{{g.nombre}}</option>
+                    {% else %}
+                    <option value="{{g.id}}">{{g.nombre}}</option>
+                    {% endif %}
+                    {% endfor %}
+                    
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block  text-gray-700 text-sm font-bold mb-2" for="foto">
+                    foto
+                </label>
+                <input name="foto" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="foto" type="file" placeholder=" Foto Promocional">
+            </div>
+
+            <button  class="bg-blue-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="">
+                Actualizar
+             </button>
+             
+            
+             <input type="hidden" name="idPelicula" value="{{pelicula.id}}">
+        </form>
+    </div>
+    <br>
+    <br>
+    <a class="bg-green-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline " href="{% url 'agregarGenero' %}">Agregar un nuevo Genero</a>
+    <a class="bg-green-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline " href="{% url 'listarPeliculas' %}">Ir a la lista de Peliculas</a>
+    <a class="bg-green-500 mx-auto hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline " href="{% url 'listarGeneros' %}">Ir a la lista de Generos</a>
+    {% endblock %}    
